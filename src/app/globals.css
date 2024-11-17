@@ -6,6 +6,13 @@
   --background: #2D2E47;
   --foreground: #171717;
 }
+@font-face {
+  font-family: 'CustomFont';
+  src: url('/fonts/MountainsofChristmas-Regular.ttf') format('ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
 
 @media (prefers-color-scheme: dark) {
   :root {
