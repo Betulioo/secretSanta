@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 const HomePage: React.FC = () => {
     return (<>
         <section className='relative bg-[#7C956F] w-full h-screen'>
@@ -39,7 +40,8 @@ const HomePage: React.FC = () => {
             <div className='absolute bottom-[33%] w-full  z-10'>
                 <div className='flex flex-col gap-4 justify-center'>
                     <button className='bg-[#687E57] text-white px-4 py-2 rounded-lg w-1/2 mx-auto'>Iniciar sesión</button>
-                    <button className='bg-[#D22C31] text-white px-4 py-2 rounded-lg w-1/2 mx-auto'>Registrarse</button>
+                    <button className='bg-[#D22C31] text-white px-4 py-2 rounded-lg w-1/2 mx-auto'>
+                    Registrarse</button>
                 </div>
 
             </div>
