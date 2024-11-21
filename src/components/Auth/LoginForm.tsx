@@ -1,35 +1,51 @@
+import React, { useState } from "react";
 import axios from "axios";
 
-const handleLogin = async (e: any) => {
+const LoginForm: React.FC = () => {
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const data = {
-      email: e.target[0].value,
-      password: e.target[1].value
-    }
-    const loginService = async (data: {email: string, password: string}) => {
-      return axios.post("/api/login"), data
-    }
+    try {
+      const response = await axios.post("/api/login", formData);
 
-    const login = await loginService(data)
-    console.log(login)
-}
+      console.log("Login successful:", response.data);
+    } catch (error) {
+      console.error("Login error:", error);
+    }
+  };
 
-const LoginForm: React.FC = () => {
   return (
-    
-    <form onSubmit={handleLogin}>
     <div className="login-container">
-        <h1>Inicia Sesión</h1>
-        <form>
-          <input type="email" placeholder="Correo electrónico" />
-          <input type="password" placeholder="Contraseña" />
-          <button type="submit">Iniciar Sesión</button>
-        </form>
-        <a href="#">¿Olvidaste tu contraseña? 🎅</a>
-      </div>
-    </form>
-      
+      <h1>Inicia Sesión</h1>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="username"
+          name="username"
+          placeholder="Nombre de Usuario"
+          value={formData.username}
+          onChange={handleChange}
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Contraseña"
+          value={formData.password}
+          onChange={handleChange}
+        />
+        <button type="submit">Iniciar Sesión</button>
+      </form>
+      <a href="#">¿Olvidaste tu contraseña? 🎅</a>
+    </div>
   );
 };
 

@@ -119,9 +119,9 @@ const RegisterForm = () => {
         </div>
         <div className="userName">
           <input
-            type="userName"
-            placeholder="Nombre de Usuario"
+            type="text"
             className="border-2 rounded-3xl h-14 w-[85%] mb-[25px] placeholder-black pl-2"
+            placeholder="Nombre de Usuario"
             value={formData.userName}
             onChange={(e) => updateForm({ userName: e.target.value })}
           />
