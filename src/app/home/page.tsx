@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 const HomePage: React.FC = () => {
     return (<>
         <section className='relative bg-[#7C956F] w-full h-screen'>
@@ -20,12 +21,12 @@ const HomePage: React.FC = () => {
             <div className='relative pt-6 z-10'>
         <div className='relative z-10 rounded-full w-[150px] h-[150px] mx-auto'>
                 <Image
-                    width={150}
-                    height={100}
-                    objectFit='cover'
-                    alt='Santa image'
-                    src='/images/home/santa.png'
-                    className='rounded-full ' />
+                    src="/images/home/santa.png"
+                    alt="Santa"
+                    width={500}
+                    height={500}
+                    style={{ objectFit: 'cover' }}
+                    className='rounded-full' />
         </div>
             <h1 className='text-center mt-4 text-5xl text-white font-navidad'>Secret <br />
                <span className='text-6xl'> Santa</span></h1>
@@ -38,10 +39,10 @@ const HomePage: React.FC = () => {
             {/* buttons*/}
             <div className='absolute bottom-[33%] w-full  z-10'>
                 <div className='flex flex-col gap-4 justify-center'>
-                    <button className='bg-[#687E57] text-white px-4 py-2 rounded-lg w-1/2 mx-auto'>Iniciar sesión</button>
-                    <button className='bg-[#D22C31] text-white px-4 py-2 rounded-lg w-1/2 mx-auto'>Registrarse</button>
+                    <button className='bg-[#687E57] text-white px-4 py-2 rounded-lg w-1/2 mx-auto'><Link href={"/login"}>Iniciar sesión</Link></button>
+                    <button className='bg-[#D22C31] text-white px-4 py-2 rounded-lg w-1/2 mx-auto'><Link href={"/register"}>Registrarse</Link>
+                    </button>
                 </div>
-
             </div>
 
             {/* white line*/}
@@ -52,7 +53,7 @@ const HomePage: React.FC = () => {
                 <Image
                     width={130}
                     height={80}
-                    objectFit='cover'
+                    style={{ objectFit: 'cover' }}
                     alt='Star image'
                     src='/images/home/star.png'
                     className='' />
@@ -63,21 +64,21 @@ const HomePage: React.FC = () => {
                 <Image
                     width={150}
                     height={100}
-                    objectFit='cover'
+                    style={{ objectFit: 'cover' }}
                     alt='Threes image'
                     src='/images/home/tree.png'
                     className='' />
                 <Image
                     width={150}
                     height={100}
-                    objectFit='cover'
+                    style={{ objectFit: 'cover' }}
                     alt='Threes image'
                     src='/images/home/tree2.png'
                     className='' />
                  <Image
                     width={150}
                     height={100}
-                    objectFit='cover'
+                    style={{ objectFit: 'cover' }}
                     alt='Threes image'
                     src='/images/home/tree2.png'
                     className='' />
@@ -96,20 +97,20 @@ const HomePage: React.FC = () => {
                 <Image
                     width={150}
                     height={100}
-                    objectFit='cover'
+                    style={{ objectFit: 'cover' }}
                     alt='Gift image'
                     src='/images/home/gift.png'
                     className='' />
                                 <Image
                     width={150}
                     height={100}
-                    objectFit='cover'
+                    style={{ objectFit: 'cover' }}
                     alt='Gift image'
                     src='/images/home/gift2.png'
                     className='' />                <Image
                     width={150}
                     height={100}
-                    objectFit='cover'
+                    style={{ objectFit: 'cover' }}
                     alt='Gift image'
                     src='/images/home/gift3.png'
                     className='' />
