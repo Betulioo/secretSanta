@@ -11,9 +11,7 @@ const RegisterForm = () => {
       email: "",
       password: "",
       confirmPassword: "",
-      name: "",
-      lastName: "",
-      registerUser: "" as "user" | "refugee",
+      userName: "",
     },
     validations: {
       email: (value) => {
@@ -29,14 +27,8 @@ const RegisterForm = () => {
         if (!value) return "Por favor confirma tu contraseña.";
         if (value !== data.password) return "Las contraseñas no coinciden.";
       },
-      name: (value) => {
+      userName: (value) => {
         if (!value) return "Por favor ingresa un nombre";
-      },
-      lastName: (value) => {
-        if (!value) return "Por favor ingresa apellidos";
-      },
-      registerUser: (value) => {
-        if (!value) return "Por favor selecciona una opción.";
       },
     },
   });
@@ -54,13 +46,13 @@ const RegisterForm = () => {
     setApiError("");
 
     try {
-      const response = await fetch("/api/user/register", {
+      const response = await fetch("/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          username: formData.name, // Ajustar según los nombres que espera tu API
+          username: formData.userName, 
           password: formData.password,
           email: formData.email,
         }),
@@ -88,6 +80,9 @@ const RegisterForm = () => {
 
   return (
     <>
+    <div className="banner">
+      <h1> ¡Registrate y comienza la magia! </h1>
+    </div>
       <form
         className="max-w-md md:max-w-2xl lg:max-w-3xl mt-10 ml-[52px] flex flex-col justify-center"
         onSubmit={handleSubmit}
@@ -103,9 +98,35 @@ const RegisterForm = () => {
           />
           {formErrors.email && <p className="text-red-500">{formErrors.email}</p>}
         </div>
-
-        {/* ... otros campos como password, confirmPassword, etc. ... */}
-
+        <div className="password">
+          <input
+            type="password"
+            placeholder="Contraseña"
+            className="border-2 rounded-3xl h-14 w-[85%] mb-[25px] placeholder-black pl-2"
+            value={formData.password}
+            onChange={(e) => updateForm({ password: e.target.value })}
+          />
+          {formErrors.password && <p className="text-red-500">{formErrors.password}</p>}
+        </div> <div className="password">
+          <input
+            type="password"
+            placeholder="Confirmar contraseña"
+            className="border-2 rounded-3xl h-14 w-[85%] mb-[25px] placeholder-black pl-2"
+            value={formData.confirmPassword}
+            onChange={(e) => updateForm({ confirmPassword: e.target.value })}
+          />
+          {formErrors.password && <p className="text-red-500">{formErrors.password}</p>}
+        </div>
+        <div className="userName">
+          <input
+            type="userName"
+            placeholder="Nombre de Usuario"
+            className="border-2 rounded-3xl h-14 w-[85%] mb-[25px] placeholder-black pl-2"
+            value={formData.userName}
+            onChange={(e) => updateForm({ userName: e.target.value })}
+          />
+          {formErrors.userName && <p className="text-red-500">{formErrors.userName}</p>}
+        </div>
         <button
           className="border-1 rounded-3xl h-14 w-[85%] bg-primaryLight text-white"
           type="submit"
