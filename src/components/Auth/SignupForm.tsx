@@ -1,3 +1,4 @@
+'use client'
 import { useForm } from "react-form-ease";
 import { useState } from "react";
 
@@ -66,8 +67,12 @@ const RegisterForm = () => {
       const result = await response.json();
       console.log("Usuario registrado:", result);
       setIsSubmitted(true);
-    } catch (error: any) {
-      setApiError(error.message || "Error en el registro");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setApiError(error.message || "Error en el registro");
+      } else {
+        setApiError("Error en el registro");
+      }
       console.error("Error al registrar:", error);
     } finally {
       setIsLoading(false);
@@ -119,9 +124,9 @@ const RegisterForm = () => {
         </div>
         <div className="userName">
           <input
-            type="userName"
-            placeholder="Nombre de Usuario"
+            type="text"
             className="border-2 rounded-3xl h-14 w-[85%] mb-[25px] placeholder-black pl-2"
+            placeholder="Nombre de Usuario"
             value={formData.userName}
             onChange={(e) => updateForm({ userName: e.target.value })}
           />

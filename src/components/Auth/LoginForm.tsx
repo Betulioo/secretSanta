@@ -1,3 +1,4 @@
+"use client";
 import axios from "axios";
 
 const handleLogin = async (e: any) => {
@@ -21,11 +22,9 @@ const LoginForm: React.FC = () => {
     <form onSubmit={handleLogin}>
     <div className="login-container">
         <h1>Inicia Sesión</h1>
-        <form>
           <input type="email" placeholder="Correo electrónico" />
           <input type="password" placeholder="Contraseña" />
           <button type="submit">Iniciar Sesión</button>
-        </form>
         <a href="#">¿Olvidaste tu contraseña? 🎅</a>
       </div>
     </form>
