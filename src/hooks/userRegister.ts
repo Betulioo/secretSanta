@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 // import axios from "axios";
 
@@ -18,7 +19,7 @@ interface useRegisterReturn {
     isLoading: boolean;
     error: string | null;
     isSuccess: boolean;
-    registerUser: (data: RegisterData) => Promise <any>;
+    registerUser: (data: RegisterData) => Promise<{ [key: string]: unknown }>;
 }
 
 const useRegister = () : useRegisterReturn => {

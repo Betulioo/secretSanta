@@ -1,3 +1,4 @@
+'use client'
 import { useForm } from "react-form-ease";
 import { useState } from "react";
 
@@ -66,8 +67,12 @@ const RegisterForm = () => {
       const result = await response.json();
       console.log("Usuario registrado:", result);
       setIsSubmitted(true);
-    } catch (error: any) {
-      setApiError(error.message || "Error en el registro");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setApiError(error.message || "Error en el registro");
+      } else {
+        setApiError("Error en el registro");
+      }
       console.error("Error al registrar:", error);
     } finally {
       setIsLoading(false);
