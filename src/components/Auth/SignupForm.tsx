@@ -1,10 +1,16 @@
 import { useForm } from "react-form-ease";
 import { useState } from "react";
+import Link from "next/link";
+import Input from "../ui/Input";
+import { Spinner } from "@nextui-org/spinner";
+import { PiArrowLineLeftLight } from "react-icons/pi";
+
 
 const RegisterForm = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [apiError, setApiError] = useState<string>("");
+  const [isSuccess, setIsSuccess] = useState(false)
 
   const { formData, updateForm, validateForm, errors: formErrors = {} } = useForm({
     data: {
@@ -66,6 +72,7 @@ const RegisterForm = () => {
       const result = await response.json();
       console.log("Usuario registrado:", result);
       setIsSubmitted(true);
+      setIsSuccess(true)
     } catch (error: any) {
       setApiError(error.message || "Error en el registro");
       console.error("Error al registrar:", error);
@@ -80,67 +87,66 @@ const RegisterForm = () => {
 
   return (
     <>
-    <div className="banner">
-      <h1> ¡Registrate y comienza la magia! </h1>
-    </div>
+      <button className="bg-primaryLight text-light text-2xl p-2 my-2 font-semibold rounded-full shadow-md hover:bg-primaryDark focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-opacity-75 absolute">
+        <Link href="/home"><PiArrowLineLeftLight /></Link>
+      </button>
+      <div className="">
+        <img src="/dog.webp" alt="" className="w-full" />
+      </div>
       <form
-        className="max-w-md md:max-w-2xl lg:max-w-3xl mt-10 ml-[52px] flex flex-col justify-center"
+        className="max-w-md md:max-w-2xl lg:max-w-3xl p-8 flex flex-col justify-center"
         onSubmit={handleSubmit}
       >
-        {/* Campos del formulario */}
-        <div className="email">
-          <input
+        <div className="email text-">
+          <Input
+            name="email"
             type="email"
             placeholder="Email"
-            className="border-2 rounded-3xl h-14 w-[85%] mb-[25px] placeholder-black pl-2"
+            className=""
             value={formData.email}
-            onChange={(e) => updateForm({ email: e.target.value })}
+            onChange={(e) => updateForm({ email: e.target.value.trim() })
+            }
           />
           {formErrors.email && <p className="text-red-500">{formErrors.email}</p>}
+          {apiError && <p className="text-red-500">{apiError}</p>}
         </div>
         <div className="password">
-          <input
+          <Input
+            name="password"
             type="password"
             placeholder="Contraseña"
-            className="border-2 rounded-3xl h-14 w-[85%] mb-[25px] placeholder-black pl-2"
+            className=""
             value={formData.password}
-            onChange={(e) => updateForm({ password: e.target.value })}
-          />
+            onChange={(e) => updateForm({ password: e.target.value.trim() })}
+          ></Input>
           {formErrors.password && <p className="text-red-500">{formErrors.password}</p>}
-        </div> <div className="password">
-          <input
+        </div>
+        <div className="confirmPassword">
+          <Input
+            name="confirm_password"
             type="password"
-            placeholder="Confirmar contraseña"
-            className="border-2 rounded-3xl h-14 w-[85%] mb-[25px] placeholder-black pl-2"
+            placeholder="Confirmar Contraseña"
+            className=""
             value={formData.confirmPassword}
-            onChange={(e) => updateForm({ confirmPassword: e.target.value })}
-          />
-          {formErrors.password && <p className="text-red-500">{formErrors.password}</p>}
+            onChange={(e) => updateForm({ confirmPassword: e.target.value.trim() })}
+          ></Input>
+          {formErrors.confirmPassword && <p className="text-red-500">{formErrors.confirmPassword}</p>}
         </div>
-        <div className="userName">
-          <input
-            type="userName"
-            placeholder="Nombre de Usuario"
-            className="border-2 rounded-3xl h-14 w-[85%] mb-[25px] placeholder-black pl-2"
-            value={formData.userName}
-            onChange={(e) => updateForm({ userName: e.target.value })}
-          />
-          {formErrors.userName && <p className="text-red-500">{formErrors.userName}</p>}
-        </div>
-        <button
-          className="border-1 rounded-3xl h-14 w-[85%] bg-primaryLight text-white"
-          type="submit"
-          disabled={isLoading}
-        >
-          {isLoading ? "Cargando..." : "Registrar"}
+        <button className="border-1 rounded-3xl h-14 w-[85%] bg-primaryLight text-white mb-[30px] mx-auto mt-4" type="submit">
+          Registrar
         </button>
       </form>
-
-      {isSubmitted && (
+      {isLoading && (<Spinner color="danger" label="Danger" labelColor="danger" />)}
+      {isSubmitted && isSuccess && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-            <h2 className="text-2xl font-semibold mb-4">¡Registro Exitoso!</h2>
-            <p className="text-lg mb-6">Tus datos han sido registrados correctamente.</p>
+          <div className="img_volunteercheck">
+              <img src="../../public/checkregister.jpg" alt="" />
+            </div>
+            <h2 className="text-2xl font-semibold mb-4">¡Excelente!</h2>
+            <p className="text-lg mb-6">
+              A partir de ahora ya eres parte de Secret Santa
+            </p>
             <button
               className="bg-primaryLight text-white px-4 py-2 rounded-md"
               onClick={closePopup}
@@ -150,8 +156,7 @@ const RegisterForm = () => {
           </div>
         </div>
       )}
-
-      {apiError && <p className="text-red-500">{apiError}</p>}
+      {formErrors && <p className="text-red-500">{apiError}</p>}
     </>
   );
 };
