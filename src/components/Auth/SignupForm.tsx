@@ -1,3 +1,4 @@
+'use client'
 import { useForm } from "react-form-ease";
 import { useState } from "react";
 import Link from "next/link";
