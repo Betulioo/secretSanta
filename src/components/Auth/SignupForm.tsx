@@ -104,7 +104,7 @@ const RegisterForm = () => {
   </Link>
 </button>
       <h1 className="mt-2 text-3xl font-bold text-red-600">Carta a Santa</h1>
-      <p className="mt-8 text-sm text-gray-600">Completa tus datos para registrarte <br> </br>y compartir tus deseos 🎄</p>
+      <p className="mt-8 text-sm text-gray-600">Completa tus datos para registrarte y compartir tus deseos 🎄</p>
     </div>
     <form
         className="max-w-md md:max-w-2xl lg:max-w-3xl p-8 flex flex-col justify-center font-navidad"
