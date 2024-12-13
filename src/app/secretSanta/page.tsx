@@ -38,7 +38,7 @@ const SecretSanta: React.FC = () => {
 
 
             {/* buttons*/}
-            <div className='absolute bottom-[33%] w-full  z-10'>
+            <div className="absolute bottom-[33%] w-full  z-10 font-navidad">
                 <div className='flex flex-col gap-4 justify-center'>
                     <button className='bg-[#687E57] text-white px-4 py-2 rounded-lg w-1/2 mx-auto'><Link href={"/login"}>Iniciar sesión</Link></button>
                     <button className='bg-[#D22C31] text-white px-4 py-2 rounded-lg w-1/2 mx-auto'><Link href={"/register"}>Registrarse</Link>

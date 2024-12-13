@@ -5,6 +5,7 @@ import Link from "next/link";
 import Input from "../ui/Input";
 import { Spinner } from "@nextui-org/spinner";
 import { PiArrowLineLeftLight } from "react-icons/pi";
+import { FaTree } from "react-icons/fa";
 
 
 const RegisterForm = () => {
@@ -54,15 +55,11 @@ const RegisterForm = () => {
 
     try {
       const response = await fetch("/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify({
           username: formData.userName, 
           password: formData.password,
           email: formData.email,
-        }),
+        })
       });
 
       if (!response.ok) {
@@ -88,14 +85,29 @@ const RegisterForm = () => {
 
   return (
     <>
-      <button className="bg-primaryLight text-light text-2xl p-2 my-2 font-semibold rounded-full shadow-md hover:bg-primaryDark focus:outline-none focus:ring-2 focus:ring-teal-400 focus:ring-opacity-75 absolute">
-        <Link href="/home"><PiArrowLineLeftLight /></Link>
-      </button>
-      <div className="">
-        {/* <img src="/dog.webp" alt="" className="w-full" /> */}
-      </div>
-      <form
-        className="max-w-md md:max-w-2xl lg:max-w-3xl p-8 flex flex-col justify-center"
+
+
+    <div className="flex justify-center items-center min-h-screen bg-red-50">
+  <div className="relative bg-white shadow-xl rounded-lg p-8 w-full max-w-lg border-4 border-dashed border-red-400">
+    {/* Estampilla */}
+    <div className="absolute top-4 right-4 w-16 h-16 bg-gray-200 border-2 border-gray-400 rounded-md">
+      <img src="/image_2-removebg-preview.png" alt="" className="w-[100px] h-16" />
+    </div>
+
+    {/* Encabezado */}
+    <div className="text-center mb-8">
+    <button className="absolute top-0 left-0 bg-red-600 text-white text-1xl p-2 my-2 font-semibold rounded-full shadow-lg hover:bg-red-700 transform transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-red-400 focus:ring-opacity-75 border-4 border-white">
+  <Link href="/" className="flex items-center gap-2">
+    {/* Icono navideño (Árbol de Navidad) */}
+    <span className="text-xl"><FaTree /></span>
+    <span className="text-lg">Regresar</span>
+  </Link>
+</button>
+      <h1 className="mt-2 text-3xl font-bold text-red-600">Carta a Santa</h1>
+      <p className="mt-8 text-sm text-gray-600">Completa tus datos para registrarte <br> </br>y compartir tus deseos 🎄</p>
+    </div>
+    <form
+        className="max-w-md md:max-w-2xl lg:max-w-3xl p-8 flex flex-col justify-center font-navidad"
         onSubmit={handleSubmit}
       >
         <div className="email text-">
@@ -146,10 +158,13 @@ const RegisterForm = () => {
           {formErrors.email && <p className="text-red-500">{formErrors.email}</p>}
           {apiError && <p className="text-red-500">{apiError}</p>}
         </div>
-        <button className="border-1 rounded-3xl h-14 w-[85%] bg-primaryLight text-white mb-[30px] mx-auto mt-4" type="submit">
+        <button className="bg-red-600 text-white text-2xl p-3 my-3 font-semibold rounded-full shadow-lg hover:bg-red-700 transform transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-red-400 focus:ring-opacity-75 border-4 border-white" type="submit">
           Registrar
         </button>
       </form>
+      <div className="text-center text-sm text-gray-500">
+      <p>🎅 Tu registro está en camino al Polo Norte ❄️</p>
+    </div>
       {isLoading && (<Spinner color="danger" label="Danger" labelColor="danger" />)}
       {isSubmitted && isSuccess && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
@@ -171,6 +186,13 @@ const RegisterForm = () => {
         </div>
       )}
       {formErrors && <p className="text-red-500">{apiError}</p>}
+    
+    {/* Pie de página */}
+   
+  </div>
+</div>
+
+      
     </>
   );
 };
