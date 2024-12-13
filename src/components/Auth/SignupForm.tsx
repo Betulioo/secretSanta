@@ -35,7 +35,7 @@ const RegisterForm = () => {
         if (value !== data.password) return "Las contraseñas no coinciden.";
       },
       userName: (value) => {
-        if (!value) return "Por favor ingresa un nombre";
+        if (!value) return "Por favor ingresa un nombre de usuario";
       },
     },
   });
@@ -92,7 +92,7 @@ const RegisterForm = () => {
         <Link href="/home"><PiArrowLineLeftLight /></Link>
       </button>
       <div className="">
-        <img src="/dog.webp" alt="" className="w-full" />
+        {/* <img src="/dog.webp" alt="" className="w-full" /> */}
       </div>
       <form
         className="max-w-md md:max-w-2xl lg:max-w-3xl p-8 flex flex-col justify-center"
@@ -132,6 +132,19 @@ const RegisterForm = () => {
             onChange={(e) => updateForm({ confirmPassword: e.target.value.trim() })}
           ></Input>
           {formErrors.confirmPassword && <p className="text-red-500">{formErrors.confirmPassword}</p>}
+        </div>
+        <div className="username">
+          <Input
+            name="userName"
+            type="userName"
+            placeholder="Username"
+            className=""
+            value={formData.userName}
+            onChange={(e) => updateForm({ userName: e.target.value.trim() })
+            }
+          />
+          {formErrors.email && <p className="text-red-500">{formErrors.email}</p>}
+          {apiError && <p className="text-red-500">{apiError}</p>}
         </div>
         <button className="border-1 rounded-3xl h-14 w-[85%] bg-primaryLight text-white mb-[30px] mx-auto mt-4" type="submit">
           Registrar
