@@ -13,7 +13,7 @@ interface Group {
 }
 const GroupList: React.FC = () => {
 
-  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MzdkYWY4ZTNkMGI5M2U0YjRjYzU4OCIsImVtYWlsIjoiZW1haWw4QGVtYWlsLmNvbSIsImlhdCI6MTczNDE4MTc3MiwiZXhwIjoxNzM0MTkyNTcyfQ.APKiiHpofl3ckXhBTUutfajtZoQikXJPYsCi_-5TIUg";
+  const token = process.env.token
 
   const data: Group[] = [
      {
