@@ -8,9 +8,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   // Extraer el cuerpo de la solicitud
-  const { username, password, email } = req.body;
+  const body = JSON.parse(req.body)
+  const { username, password, email } = body;
 
   // Validar campos requeridos
+
   if (!username || !password || !email) {
     return res.status(400).json({ message: 'Faltan campos por llenar' });
   }
