@@ -1,15 +1,21 @@
 'use client'
 import React from "react";
 import { useState } from "react";
-import axios from "axios";
 import Input from "../ui/Input";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const LoginForm: React.FC = () => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
+  const router = useRouter();
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [apiError, setApiError] = useState<string>("");
+  const [isSuccess, setIsSuccess] = useState(false)
+  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -25,11 +31,10 @@ const LoginForm: React.FC = () => {
       return alert("Tienes que llenar todos los campos");
     }
   
-    // setIsLoading(true);
-    // setApiError("");
+    setIsLoading(true);
+    setApiError("");
   
     try {
-      // Realizar la solicitud de inicio de sesión
       const response = await fetch("/api/login", {
         method: "POST",
         headers: {
@@ -48,7 +53,6 @@ const LoginForm: React.FC = () => {
   
       const result = await response.json();
   
-      // Guardar el token en localStorage
       const token = result.token;
       if (token) {
         localStorage.setItem("authToken", token);
@@ -57,13 +61,14 @@ const LoginForm: React.FC = () => {
         throw new Error("No se recibió un token en la respuesta.");
       }
   
-      // setIsSubmitted(true);
-      // setIsSuccess(true);
+      setIsSubmitted(true);
+      setIsSuccess(true);
+      router.push("/home")
     } catch (error: any) {
-      // setApiError(error.message || "Error en el inicio de sesión");
+      setApiError(error.message || "Error en el inicio de sesión");
       console.error("Error al iniciar sesión:", error);
     } finally {
-      // setIsLoading(false);
+      setIsLoading(false);
     }
   };
 
