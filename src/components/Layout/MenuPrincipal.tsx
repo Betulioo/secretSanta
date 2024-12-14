@@ -90,10 +90,7 @@ const MenuPrincipal: React.FC = () => {
       {/* Menú desplegable en móviles */}
       {isMobileMenuOpen && (
         <div className="lg:hidden fixed top-[66px] left-0 w-full backdrop-blur-md bg-[#FFFEFEFF] z-20 shadow-md h-[40vh] opacity-[0.99] p-8">
-          <div className="px-4 py-6 space-y-4">
-            <div className="px-4 py-6 space-y-4">
-              <button onClick={handleClick}>Close Session</button>
-            </div>
+             <button onClick={handleClick} className="cursor-pointer text-[#687E57] text-2xl leading-[180%]  focus:border-b-[1px] focus:border-[#0a0a0c]">Close Session</button>
             {menuItems.map((item) => (
               <div key={item.name}>
                 <div className="flex justify-between items-center">
@@ -151,7 +148,6 @@ const MenuPrincipal: React.FC = () => {
               </div>
             ))}
           </div>
-        </div>
       )}
     </div>
   );
