@@ -28,6 +28,8 @@ export default {
       backgroundImage: {
         "home-mountain": "url('/images/home/mountain.png')",
         "footer-texture": "url('/img/footer-texture.png')",
+        "stamped": "url('/stamped.png')",
+        "homeStamped": "url('/bg-stamped.jpg')",
       },
     },
   },

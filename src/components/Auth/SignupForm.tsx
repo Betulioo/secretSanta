@@ -82,29 +82,26 @@ const RegisterForm = () => {
   const closePopup = () => {
     setIsSubmitted(false);
   };
-
   return (
     <>
 
 
-    <div className="flex justify-center items-center min-h-screen bg-red-50">
-  <div className="relative bg-white shadow-xl rounded-lg p-8 w-full max-w-lg border-4 border-dashed border-red-400">
+    <div className="flex justify-center items-center min-h-screen bg-red-50 font-navidad">
+  <div className="relative flex flex-col bg-[#FFECB4] shadow-xl rounded-lg p-6 w-full max-w-lg border-4 border-dashed border-red-400">
     {/* Estampilla */}
-    <div className="absolute top-4 right-4 w-16 h-16 bg-gray-200 border-2 border-gray-400 rounded-md">
-      <img src="/image_2-removebg-preview.png" alt="" className="w-[100px] h-16" />
-    </div>
+      <img src="/image_2-removebg-preview.png" alt="" className="w-[65px] h-16 self-end" />
 
     {/* Encabezado */}
     <div className="text-center mb-8">
-    <button className="absolute top-0 left-0 bg-red-600 text-white text-1xl p-2 my-2 font-semibold rounded-full shadow-lg hover:bg-red-700 transform transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-red-400 focus:ring-opacity-75 border-4 border-white">
+    <button className="absolute top-0 left-0 bg-red-600 text-white  p-2 my-2 font-semibold rounded-full shadow-lg hover:bg-red-700 transform transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-red-400 focus:ring-opacity-75 border-4 border-white">
   <Link href="/" className="flex items-center gap-2">
     {/* Icono navideño (Árbol de Navidad) */}
-    <span className="text-xl"><FaTree /></span>
-    <span className="text-lg">Regresar</span>
+    <span className="text-lg"><FaTree /></span>
+    <span className="text-xs">Regresar</span>
   </Link>
 </button>
       <h1 className="mt-2 text-3xl font-bold text-red-600">Carta a Santa</h1>
-      <p className="mt-8 text-sm text-gray-600">Completa tus datos para registrarte <br> </br>y compartir tus deseos 🎄</p>
+      <p className="mt-8 text-sm text-gray-600">Completa tus datos para registrarte y compartir tus deseos 🎄</p>
     </div>
     <form
         className="max-w-md md:max-w-2xl lg:max-w-3xl p-8 flex flex-col justify-center font-navidad"
