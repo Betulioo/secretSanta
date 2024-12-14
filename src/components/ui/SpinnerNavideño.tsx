@@ -2,7 +2,7 @@ import React from "react";
 
 const ChristmasSpinner: React.FC = () => {
   return (
-    <div className="flex justify-center items-center h-screen bg-blue-50">
+    <div className="flex justify-center items-center h-4 bg-blue-50">
       <div className="relative">
         {/* <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-red-600 border-dashed"></div> */}
         <div className="absolute inset-0 flex justify-center items-center">
