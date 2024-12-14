@@ -1,20 +1,20 @@
+'use client'
 import MenuPrincipal from "@/components/Layout/MenuPrincipal";
 import GroupList from "@/components/SecretSanta/grouplist";
-import React from "react";  
+import React from "react";
 
 
 const House: React.FC = () => {
+  const handleClick = () => {
+    localStorage.removeItem("authToken");
+    // sessionStorage.removeItem("authToken");
+  };
+  return (
+    <div className="bg-[#7C956F]">
+      <MenuPrincipal />
+      <GroupList />
+    </div>
+  );
+};
 
-    return (
-            <div className="bg-[#7C956F]">
-            <MenuPrincipal />
-            <GroupList />
-        
-        </div>
-        
-        
-)
-
-}
- 
 export default House;
