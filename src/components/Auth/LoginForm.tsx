@@ -54,6 +54,7 @@ const LoginForm: React.FC = () => {
       const result = await response.json();
   
       const token = result.token;
+      console.log(token)
       if (token) {
         localStorage.setItem("authToken", token);
         console.log("Inicio de sesión exitoso. Token guardado en localStorage:", token);
