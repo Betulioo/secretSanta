@@ -36,7 +36,7 @@ const MenuPrincipal: React.FC = () => {
             setOpenSubItem(subItemName);
         }
     };
-    return (        <div className="relative font-sans">
+    return (        <div className="relative font-navidad">
             {/* Menú principal */}
             <div
                 className="fixed top-0 backdrop-blur-md bg-[#D22C31] flex items-center justify-between lg:justify-center w-full h-[66px] px-4 md:px-8 lg:px-16 z-50 gap-x-5"
