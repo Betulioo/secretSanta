@@ -18,7 +18,7 @@ const RegisterForm = () => {
       email: "",
       password: "",
       confirmPassword: "",
-      userName: "",
+      username: "",
     },
     validations: {
       email: (value) => {
@@ -27,14 +27,13 @@ const RegisterForm = () => {
       },
       password: (value) => {
         if (!value) return "Por favor ingresa una contraseña.";
-        if (value.length < 6) return "La contraseña debe tener al menos 6 caracteres.";
-        if (value.length > 12) return "La contraseña no puede tener más de 12 caracteres.";
+        if(! /[A-Za-z\d$@$!%*?&]{8,15}/.test(value)) return "Tu contraseña debe tener entre 8 y 15 caracteres y puede incluir letras, números y los siguientes caracteres especiales: $ @ ! % * ? &"
       },
       confirmPassword: (value, data) => {
         if (!value) return "Por favor confirma tu contraseña.";
         if (value !== data.password) return "Las contraseñas no coinciden.";
       },
-      userName: (value) => {
+      username: (value) => {
         if (!value) return "Por favor ingresa un nombre de usuario";
       },
     },
@@ -48,14 +47,16 @@ const RegisterForm = () => {
       console.log("Errores en el formulario:", formErrors);
       return;
     }
-
+    
     setIsLoading(true);
     setApiError("");
 
     try {
+      
       const response = await fetch("/api/register", {
+        method: 'POST',
         body: JSON.stringify({
-          username: formData.userName, 
+          username: formData.username, 
           password: formData.password,
           email: formData.email,
         })
@@ -70,12 +71,8 @@ const RegisterForm = () => {
       console.log("Usuario registrado:", result);
       setIsSubmitted(true);
       setIsSuccess(true)
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        setApiError(error.message || "Error en el registro");
-      } else {
-        setApiError("Error en el registro");
-      }
+    } catch (error: any) {
+      setApiError(error.message || "Error en el registro");
       console.error("Error al registrar:", error);
     } finally {
       setIsLoading(false);
@@ -151,8 +148,8 @@ const RegisterForm = () => {
             type="userName"
             placeholder="Username"
             className=""
-            value={formData.userName}
-            onChange={(e) => updateForm({ userName: e.target.value.trim() })
+            value={formData.username}
+            onChange={(e) => updateForm({ username: e.target.value.trim() })
             }
           />
           {formErrors.email && <p className="text-red-500">{formErrors.email}</p>}
