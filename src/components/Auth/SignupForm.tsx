@@ -1,10 +1,17 @@
+'use client'
 import { useForm } from "react-form-ease";
 import { useState } from "react";
+import Link from "next/link";
+import Input from "../ui/Input";
+import { Spinner } from "@nextui-org/spinner";
+import { FaTree } from "react-icons/fa";
+
 
 const RegisterForm = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [apiError, setApiError] = useState<string>("");
+  const [isSuccess, setIsSuccess] = useState(false)
 
   const { formData, updateForm, validateForm, errors: formErrors = {} } = useForm({
     data: {
@@ -28,7 +35,7 @@ const RegisterForm = () => {
         if (value !== data.password) return "Las contraseñas no coinciden.";
       },
       userName: (value) => {
-        if (!value) return "Por favor ingresa un nombre";
+        if (!value) return "Por favor ingresa un nombre de usuario";
       },
     },
   });
@@ -47,15 +54,11 @@ const RegisterForm = () => {
 
     try {
       const response = await fetch("/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
         body: JSON.stringify({
           username: formData.userName, 
           password: formData.password,
           email: formData.email,
-        }),
+        })
       });
 
       if (!response.ok) {
@@ -66,8 +69,13 @@ const RegisterForm = () => {
       const result = await response.json();
       console.log("Usuario registrado:", result);
       setIsSubmitted(true);
-    } catch (error: any) {
-      setApiError(error.message || "Error en el registro");
+      setIsSuccess(true)
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setApiError(error.message || "Error en el registro");
+      } else {
+        setApiError("Error en el registro");
+      }
       console.error("Error al registrar:", error);
     } finally {
       setIsLoading(false);
@@ -77,70 +85,97 @@ const RegisterForm = () => {
   const closePopup = () => {
     setIsSubmitted(false);
   };
-
   return (
     <>
-    <div className="banner">
-      <h1> ¡Registrate y comienza la magia! </h1>
+
+
+    <div className="flex justify-center items-center min-h-screen bg-red-50 font-navidad">
+  <div className="relative flex flex-col bg-[#FFECB4] shadow-xl rounded-lg p-6 w-full max-w-lg border-4 border-dashed border-red-400">
+    {/* Estampilla */}
+      <img src="/image_2-removebg-preview.png" alt="" className="w-[65px] h-16 self-end" />
+
+    {/* Encabezado */}
+    <div className="text-center mb-8">
+    <button className="absolute top-0 left-0 bg-red-600 text-white  p-2 my-2 font-semibold rounded-full shadow-lg hover:bg-red-700 transform transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-red-400 focus:ring-opacity-75 border-4 border-white">
+  <Link href="/" className="flex items-center gap-2">
+    {/* Icono navideño (Árbol de Navidad) */}
+    <span className="text-lg"><FaTree /></span>
+    <span className="text-xs">Regresar</span>
+  </Link>
+</button>
+      <h1 className="mt-2 text-3xl font-bold text-red-600">Carta a Santa</h1>
+      <p className="mt-8 text-sm text-gray-600">Completa tus datos para registrarte y compartir tus deseos 🎄</p>
     </div>
-      <form
-        className="max-w-md md:max-w-2xl lg:max-w-3xl mt-10 ml-[52px] flex flex-col justify-center"
+    <form
+        className="max-w-md md:max-w-2xl lg:max-w-3xl p-8 flex flex-col justify-center font-navidad"
         onSubmit={handleSubmit}
       >
-        {/* Campos del formulario */}
-        <div className="email">
-          <input
+        <div className="email text-">
+          <Input
+            name="email"
             type="email"
             placeholder="Email"
-            className="border-2 rounded-3xl h-14 w-[85%] mb-[25px] placeholder-black pl-2"
+            className=""
             value={formData.email}
-            onChange={(e) => updateForm({ email: e.target.value })}
+            onChange={(e) => updateForm({ email: e.target.value.trim() })
+            }
           />
           {formErrors.email && <p className="text-red-500">{formErrors.email}</p>}
+          {apiError && <p className="text-red-500">{apiError}</p>}
         </div>
         <div className="password">
-          <input
+          <Input
+            name="password"
             type="password"
             placeholder="Contraseña"
-            className="border-2 rounded-3xl h-14 w-[85%] mb-[25px] placeholder-black pl-2"
+            className=""
             value={formData.password}
-            onChange={(e) => updateForm({ password: e.target.value })}
-          />
+            onChange={(e) => updateForm({ password: e.target.value.trim() })}
+          ></Input>
           {formErrors.password && <p className="text-red-500">{formErrors.password}</p>}
-        </div> <div className="password">
-          <input
+        </div>
+        <div className="confirmPassword">
+          <Input
+            name="confirm_password"
             type="password"
-            placeholder="Confirmar contraseña"
-            className="border-2 rounded-3xl h-14 w-[85%] mb-[25px] placeholder-black pl-2"
+            placeholder="Confirmar Contraseña"
+            className=""
             value={formData.confirmPassword}
-            onChange={(e) => updateForm({ confirmPassword: e.target.value })}
-          />
-          {formErrors.password && <p className="text-red-500">{formErrors.password}</p>}
+            onChange={(e) => updateForm({ confirmPassword: e.target.value.trim() })}
+          ></Input>
+          {formErrors.confirmPassword && <p className="text-red-500">{formErrors.confirmPassword}</p>}
         </div>
-        <div className="userName">
-          <input
+        <div className="username">
+          <Input
+            name="userName"
             type="userName"
-            placeholder="Nombre de Usuario"
-            className="border-2 rounded-3xl h-14 w-[85%] mb-[25px] placeholder-black pl-2"
+            placeholder="Username"
+            className=""
             value={formData.userName}
-            onChange={(e) => updateForm({ userName: e.target.value })}
+            onChange={(e) => updateForm({ userName: e.target.value.trim() })
+            }
           />
-          {formErrors.userName && <p className="text-red-500">{formErrors.userName}</p>}
+          {formErrors.email && <p className="text-red-500">{formErrors.email}</p>}
+          {apiError && <p className="text-red-500">{apiError}</p>}
         </div>
-        <button
-          className="border-1 rounded-3xl h-14 w-[85%] bg-primaryLight text-white"
-          type="submit"
-          disabled={isLoading}
-        >
-          {isLoading ? "Cargando..." : "Registrar"}
+        <button className="bg-red-600 text-white text-2xl p-3 my-3 font-semibold rounded-full shadow-lg hover:bg-red-700 transform transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-red-400 focus:ring-opacity-75 border-4 border-white" type="submit">
+          Registrar
         </button>
       </form>
-
-      {isSubmitted && (
+      <div className="text-center text-sm text-gray-500">
+      <p>🎅 Tu registro está en camino al Polo Norte ❄️</p>
+    </div>
+      {isLoading && (<Spinner color="danger" label="Danger" labelColor="danger" />)}
+      {isSubmitted && isSuccess && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg shadow-lg text-center">
-            <h2 className="text-2xl font-semibold mb-4">¡Registro Exitoso!</h2>
-            <p className="text-lg mb-6">Tus datos han sido registrados correctamente.</p>
+          <div className="img_volunteercheck">
+              <img src="../../public/checkregister.jpg" alt="" />
+            </div>
+            <h2 className="text-2xl font-semibold mb-4">¡Excelente!</h2>
+            <p className="text-lg mb-6">
+              A partir de ahora ya eres parte de Secret Santa
+            </p>
             <button
               className="bg-primaryLight text-white px-4 py-2 rounded-md"
               onClick={closePopup}
@@ -150,8 +185,14 @@ const RegisterForm = () => {
           </div>
         </div>
       )}
+      {formErrors && <p className="text-red-500">{apiError}</p>}
+    
+    {/* Pie de página */}
+   
+  </div>
+</div>
 
-      {apiError && <p className="text-red-500">{apiError}</p>}
+      
     </>
   );
 };
