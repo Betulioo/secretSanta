@@ -4,7 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import Input from "../ui/Input";
 import { Spinner } from "@nextui-org/spinner";
-import { PiArrowLineLeftLight } from "react-icons/pi";
 import { FaTree } from "react-icons/fa";
 
 
@@ -71,8 +70,12 @@ const RegisterForm = () => {
       console.log("Usuario registrado:", result);
       setIsSubmitted(true);
       setIsSuccess(true)
-    } catch (error: any) {
-      setApiError(error.message || "Error en el registro");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setApiError(error.message || "Error en el registro");
+      } else {
+        setApiError("Error en el registro");
+      }
       console.error("Error al registrar:", error);
     } finally {
       setIsLoading(false);

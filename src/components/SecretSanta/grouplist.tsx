@@ -1,6 +1,6 @@
 
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Image from 'next/image';
 
 interface Group {
@@ -92,9 +92,8 @@ const GroupList: React.FC = () => {
         "quantity": 8,
     },
   ]
-  const [groups, setGroups] = useState<Group[]>(data);
-  const [usersList, setUserlist] = useState<{ userId: string; username: string }[]>([]);
-
+  // const [groups, setGroups] = useState<Group[]>(data);
+  const groups = data;
 
 
   const fetchUsernames = async (groupsData: Group[]) => {
@@ -118,14 +117,12 @@ const GroupList: React.FC = () => {
     const fetchData = async () => {
       const data = await fetchUsernames(groups);
       console.log(data);
-      setUserlist(data);
+      // setUserlist(data);
     };
     fetchData();
   }, [groups]);
 
-  const isGroupFull = (group: Group): boolean => {
-    return group.usersList.length >= group.quantity;
-  };
+
 
   const getGroupStatus = (group: Group): string => {
     return `${group.usersList.length}/${group.quantity}`;

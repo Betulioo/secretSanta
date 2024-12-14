@@ -11,13 +11,28 @@ const MenuPrincipal: React.FC = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     // Elementos del menú
-    const menuItems = [
-        { name: "Profile", href: "/profile" },
-   
-        { name: "Wish List", href: "/wishlist" },
-        { name: "Groups", href: "/groups" },
-        
-    ];
+interface SubSubItem {
+    name: string;
+    href: string;
+}
+
+interface SubItem {
+    name: string;
+    href: string;
+    subSubItems?: SubSubItem[];
+}
+
+interface MenuItem {
+    name: string;
+    href: string;
+    subItems?: SubItem[];
+}
+
+const menuItems: MenuItem[] = [
+    { name: "Profile", href: "/profile", subItems: [] },
+    { name: "Wish List", href: "/wishlist", subItems: [] },
+    { name: "Groups", href: "/groups", subItems: [] },
+];
 
     // Función para manejar el clic en los elementos del menú en móviles
     const handleMobileMenuItemClick = (itemName: string) => {

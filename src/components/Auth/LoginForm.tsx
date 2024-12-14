@@ -1,12 +1,13 @@
 "use client";
 import axios from "axios";
 
-const handleLogin = async (e: any) => {
+const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const form = e.target as HTMLFormElement;
     const data = {
-      email: e.target[0].value,
-      password: e.target[1].value
+      email: (form.elements.namedItem('email') as HTMLInputElement).value,
+      password: (form.elements.namedItem('password') as HTMLInputElement).value
     }
     const loginService = async (data: {email: string, password: string}) => {
       return axios.post("/api/login"), data
@@ -21,8 +22,8 @@ const LoginForm: React.FC = () => {
     
     <form onSubmit={handleLogin}>
     <div className="login-container">
-        <h1>Inicia Sesión</h1>
-          <input type="email" placeholder="Correo electrónico" />
+          <input type="email" name="email" placeholder="Correo electrónico" />
+          <input type="password" name="password" placeholder="Contraseña" />
           <input type="password" placeholder="Contraseña" />
           <button type="submit">Iniciar Sesión</button>
         <a href="#">¿Olvidaste tu contraseña? 🎅</a>
