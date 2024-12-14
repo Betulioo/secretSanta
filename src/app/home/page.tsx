@@ -6,7 +6,7 @@ import React from "react";
 const House: React.FC = () => {
 
     return (
-            <div>
+            <div className="bg-[#7C956F]">
             <MenuPrincipal />
             <GroupList />
         

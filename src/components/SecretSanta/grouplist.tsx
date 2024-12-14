@@ -24,9 +24,6 @@ const GroupList: React.FC = () => {
             "6737a87d85abcb0af29fdd08",
             "6737dae0e3d0b93e4b4cc574",
             "6737dae6e3d0b93e4b4cc578",
-            "6737dae9e3d0b93e4b4cc57c",
-            "6737daede3d0b93e4b4cc580",
-            "6737daf1e3d0b93e4b4cc584",
             "6737daf8e3d0b93e4b4cc588"
         ],
         "isPrivate": false,
@@ -40,7 +37,6 @@ const GroupList: React.FC = () => {
             "6737a87d85abcb0af29fdd08",
             "6737dae0e3d0b93e4b4cc574",
             "6737dae6e3d0b93e4b4cc578",
-            "6737dae9e3d0b93e4b4cc57c",
             "6737daede3d0b93e4b4cc580",
             "6737daf1e3d0b93e4b4cc584",
             "6737daf8e3d0b93e4b4cc588"
@@ -54,8 +50,6 @@ const GroupList: React.FC = () => {
         "usersList": [
             "6737c70b8868b3d22330c4f0",
             "6737a87d85abcb0af29fdd08",
-            "6737dae0e3d0b93e4b4cc574",
-            "6737dae6e3d0b93e4b4cc578",
             "6737dae9e3d0b93e4b4cc57c",
             "6737daede3d0b93e4b4cc580",
             "6737daf1e3d0b93e4b4cc584",
@@ -96,39 +90,7 @@ const GroupList: React.FC = () => {
         "isPrivate": true,
         "owner": "6737c70b8868b3d22330c4f0",
         "quantity": 8,
-    }, {
-        "_id": "6737d977228ae510eb7682c5",
-        "name": "familia2022",
-        "usersList": [
-            "6737c70b8868b3d22330c4f0",
-            "6737a87d85abcb0af29fdd08",
-            "6737dae0e3d0b93e4b4cc574",
-            "6737dae6e3d0b93e4b4cc578",
-            "6737dae9e3d0b93e4b4cc57c",
-            "6737daede3d0b93e4b4cc580",
-            "6737daf1e3d0b93e4b4cc584",
-            "6737daf8e3d0b93e4b4cc588"
-        ],
-        "isPrivate": false,
-        "owner": "6737c70b8868b3d22330c4f0",
-        "quantity": 8,
-    }, {
-        "_id": "6737d977228ae510eb7682c5",
-        "name": "familia2022",
-        "usersList": [
-            "6737c70b8868b3d22330c4f0",
-            "6737a87d85abcb0af29fdd08",
-            "6737dae0e3d0b93e4b4cc574",
-            "6737dae6e3d0b93e4b4cc578",
-            "6737dae9e3d0b93e4b4cc57c",
-            "6737daede3d0b93e4b4cc580",
-            "6737daf1e3d0b93e4b4cc584",
-            "6737daf8e3d0b93e4b4cc588"
-        ],
-        "isPrivate": false,
-        "owner": "6737c70b8868b3d22330c4f0",
-        "quantity": 8,
-    }
+    },
   ]
   const [groups, setGroups] = useState<Group[]>(data);
   const [usersList, setUserlist] = useState<{ userId: string; username: string }[]>([]);
@@ -169,13 +131,12 @@ const GroupList: React.FC = () => {
     return `${group.usersList.length}/${group.quantity}`;
   };
   return (
-    <div className="flex flex-col relative bg-homeStamped w-full h-full font-navidad items-center">
-          <h1>Group List</h1>
+    <div className="flex flex-col relative bg-[#7C956F] w-full h-full font-navidad items-center mt-10">
           
 
       <div className="flex flex-col gap-4 relative w-[95%] rounded-xl  min-h-[10vh]  z-10 py-14 drop-shadow-2xl">
         {groups.map((group) => (
-          <div key={group._id} className="bg-stamped border-4 border-[#FA3D3DFF] rounded-xl">
+          <div key={group._id} className="bg-stamped border-4 border-[#D22C31] rounded-xl">
 
             <div className="p-2  grid grid-cols-2 gap-2 bg-[#EDE5E5B0] rounded-xl">
             <div className="flex flex-col items-center text-black text-xl">
