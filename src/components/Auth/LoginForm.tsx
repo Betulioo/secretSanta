@@ -4,6 +4,7 @@ import { useState } from "react";
 import Input from "../ui/Input";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import SpinnerNavideño from "../ui/SpinnerNavideño"
 
 const LoginForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -96,6 +97,7 @@ const LoginForm: React.FC = () => {
         <button type="submit" className="bg-red-600 text-white  p-2 my-2 font-semibold rounded-full shadow-lg hover:bg-red-700 transform transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-red-400 focus:ring-opacity-75 border-4 border-white">Iniciar Sesión</button>
 
       </form>
+      {isSuccess && <SpinnerNavideño />}
       <div className="grid place-items-center">
       ¿No tienes usuario aún?  <Link href="/register" className="mt-2"> Registrate 🎅</Link>
 
