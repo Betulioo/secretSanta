@@ -5,7 +5,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (req.method !== "POST") {
         return res.status(405).json({ message: "Método no permitido" });
     }
-
+    
     const { username, password } = req.body;
 
     if (!username || !password) {

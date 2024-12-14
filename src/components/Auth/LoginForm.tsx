@@ -18,13 +18,52 @@ const LoginForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+  
+    
+    if (!formData.username || !formData.password) {
+      console.log("Faltan campos por llenar en el Login");
+      return alert("Tienes que llenar todos los campos");
+    }
+  
+    // setIsLoading(true);
+    // setApiError("");
+  
     try {
-      const response = await axios.post("/api/login", formData);
-
-      console.log("Login successful:", response.data);
-    } catch (error) {
-      console.error("Login error:", error);
+      // Realizar la solicitud de inicio de sesión
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: formData.username,
+          password: formData.password,
+        }),
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Error desconocido");
+      }
+  
+      const result = await response.json();
+  
+      // Guardar el token en localStorage
+      const token = result.token;
+      if (token) {
+        localStorage.setItem("authToken", token);
+        console.log("Inicio de sesión exitoso. Token guardado en localStorage:", token);
+      } else {
+        throw new Error("No se recibió un token en la respuesta.");
+      }
+  
+      // setIsSubmitted(true);
+      // setIsSuccess(true);
+    } catch (error: any) {
+      // setApiError(error.message || "Error en el inicio de sesión");
+      console.error("Error al iniciar sesión:", error);
+    } finally {
+      // setIsLoading(false);
     }
   };
 
