@@ -1,6 +1,5 @@
-
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Image from 'next/image';
 
 interface Group {
@@ -13,115 +12,69 @@ interface Group {
 }
 const GroupList: React.FC = () => {
 
-  const token = process.env.token
+  const [groups, setGroups] = useState<Group[]>([]);
 
-  const data: Group[] = [
-     {
-        "_id": "6737d977228ae510eb7682c5",
-        "name": "familia2022",
-        "usersList": [
-            "6737c70b8868b3d22330c4f0",
-            "6737a87d85abcb0af29fdd08",
-            "6737dae0e3d0b93e4b4cc574",
-            "6737dae6e3d0b93e4b4cc578",
-            "6737daf8e3d0b93e4b4cc588"
-        ],
-        "isPrivate": false,
-        "owner": "6737c70b8868b3d22330c4f0",
-        "quantity": 8,
-    }, {
-        "_id": "6737d977228ae510eb7682c5",
-        "name": "familia2022",
-        "usersList": [
-            "6737c70b8868b3d22330c4f0",
-            "6737a87d85abcb0af29fdd08",
-            "6737dae0e3d0b93e4b4cc574",
-            "6737dae6e3d0b93e4b4cc578",
-            "6737daede3d0b93e4b4cc580",
-            "6737daf1e3d0b93e4b4cc584",
-            "6737daf8e3d0b93e4b4cc588"
-        ],
-        "isPrivate": false,
-        "owner": "6737c70b8868b3d22330c4f0",
-        "quantity": 8,
-    }, {
-        "_id": "6737d977228ae510eb7682c5",
-        "name": "familia2022",
-        "usersList": [
-            "6737c70b8868b3d22330c4f0",
-            "6737a87d85abcb0af29fdd08",
-            "6737dae9e3d0b93e4b4cc57c",
-            "6737daede3d0b93e4b4cc580",
-            "6737daf1e3d0b93e4b4cc584",
-            "6737daf8e3d0b93e4b4cc588"
-        ],
-        "isPrivate": true,
-        "owner": "6737c70b8868b3d22330c4f0",
-        "quantity": 8,
-    }, {
-        "_id": "6737d977228ae510eb7682c5",
-        "name": "familia2022",
-        "usersList": [
-            "6737c70b8868b3d22330c4f0",
-            "6737a87d85abcb0af29fdd08",
-            "6737dae0e3d0b93e4b4cc574",
-            "6737dae6e3d0b93e4b4cc578",
-            "6737dae9e3d0b93e4b4cc57c",
-            "6737daede3d0b93e4b4cc580",
-            "6737daf1e3d0b93e4b4cc584",
-            "6737daf8e3d0b93e4b4cc588"
-        ],
-        "isPrivate": false,
-        "owner": "6737c70b8868b3d22330c4f0",
-        "quantity": 8,
-    }, {
-        "_id": "6737d977228ae510eb7682c5",
-        "name": "familia2022",
-        "usersList": [
-            "6737c70b8868b3d22330c4f0",
-            "6737a87d85abcb0af29fdd08",
-            "6737dae0e3d0b93e4b4cc574",
-            "6737dae6e3d0b93e4b4cc578",
-            "6737dae9e3d0b93e4b4cc57c",
-            "6737daede3d0b93e4b4cc580",
-            "6737daf1e3d0b93e4b4cc584",
-            "6737daf8e3d0b93e4b4cc588"
-        ],
-        "isPrivate": true,
-        "owner": "6737c70b8868b3d22330c4f0",
-        "quantity": 8,
-    },
-  ]
-  // const [groups, setGroups] = useState<Group[]>(data);
-  const groups = data;
+  //useEffect para proteger la ruta
+ useEffect(() => {
+  const protectedRoute = async () => {
+    const auth = await fetch("/api/protected", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    });
 
+    const isauth = await auth.json();
+    console.log(isauth);
 
-  const fetchUsernames = async (groupsData: Group[]) => {
-    const userList = groupsData.map((group) => group.usersList).flat();
-    
-    const usersWithNames = await Promise.all(
-      userList.map(async (userId) => {
-        const response = await fetch(`/api/userbyId/${userId}`, {
-           headers: {
-      Authorization: `Bearer ${token}`,
-  },
-        });
-        const data = await response.json();
-        return { userId, username: data.username };
-      })
-    );
-    return usersWithNames;
+    if (isauth.message === "Unauthorized" || isauth.error) {
+      window.location.href = "/login"; // Redirección manual
+    }
   };
 
+  protectedRoute();
+}, []);
+
+
+  // useEffect para obtener los grupos
   useEffect(() => {
+  const token = localStorage.getItem("authToken");  
+
+
     const fetchData = async () => {
-      const data = await fetchUsernames(groups);
-      console.log(data);
+      const response = await fetch("/api/groups", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      const data = await response.json();
+      setGroups(data);
+
       // setUserlist(data);
     };
     fetchData();
-  }, [groups]);
+  }, []);
 
+
+  //    const fetchUsernames = async (groupsData: Group[]) => {
+  //   const userList = groupsData.map((group) => group.usersList).flat();
+    
+  //   const usersWithNames = await Promise.all(
+  //     userList.map(async (userId) => {
+  //       const response = await fetch(`/api/userbyId/${userId}`, {
+  //          headers: {
+  //     Authorization: `Bearer ${token}`,
+  // },
+  //       });
+  //       const data = await response.json();
+  //       return { userId, username: data.username };
+  //     })
+  //   );
+  //   return usersWithNames;
+  // };
+  //       const usernames = await fetchUsernames(groups);
+  //     console.log(usernames);
 
 
   const getGroupStatus = (group: Group): string => {
@@ -132,8 +85,8 @@ const GroupList: React.FC = () => {
           
 
       <div className="flex flex-col gap-4 relative w-[95%] rounded-xl  min-h-[10vh]  z-10 py-14 drop-shadow-2xl">
-        {groups.map((group) => (
-          <div key={group._id} className="bg-stamped border-4 border-[#D22C31] rounded-xl">
+        {groups.map((group,index) => (
+          <div key={index} className="bg-stamped border-4 border-[#D22C31] rounded-xl">
 
             <div className="p-2  grid grid-cols-2 gap-2 bg-[#EDE5E5B0] rounded-xl">
             <div className="flex flex-col items-center text-black text-xl">
