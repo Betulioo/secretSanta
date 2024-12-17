@@ -57,24 +57,7 @@ const GroupList: React.FC = () => {
   }, []);
 
 
-  //    const fetchUsernames = async (groupsData: Group[]) => {
-  //   const userList = groupsData.map((group) => group.usersList).flat();
-    
-  //   const usersWithNames = await Promise.all(
-  //     userList.map(async (userId) => {
-  //       const response = await fetch(`/api/userbyId/${userId}`, {
-  //          headers: {
-  //     Authorization: `Bearer ${token}`,
-  // },
-  //       });
-  //       const data = await response.json();
-  //       return { userId, username: data.username };
-  //     })
-  //   );
-  //   return usersWithNames;
-  // };
-  //       const usernames = await fetchUsernames(groups);
-  //     console.log(usernames);
+ 
 
 
   const getGroupStatus = (group: Group): string => {
