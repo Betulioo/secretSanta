@@ -11,6 +11,7 @@ const Group: React.FC = () => {
   const [usernames, setUsernames] = useState<{ userId: string; username: string }[]>([]);
   const [isOwner, setIsOwner] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isFull, setIsFull] = useState(false);
   const getGroup = async (id: string) => {
     const response = await fetch(`/api/group/${id}`, {
       headers: {
@@ -74,6 +75,7 @@ protectedRoute();
       const usernames = await getUsernames(groupData);
       setUsernames(usernames);
       setIsLoading(false);
+      setIsFull(groupData[0].usersList?.length === groupData[0].quantity);
     };
     fetchData();
   }, [id]);
@@ -121,7 +123,7 @@ protectedRoute();
       <div className="mt-4">
         <button
           onClick={() => alert("Ingresando al grupo...")}
-          disabled={groupData && usernames.length >= groupData.quantity}
+          disabled={isFull}
           className={`px-4 py-2 rounded ${
             groupData && usernames.length < groupData.quantity
               ? "bg-green-500 text-white"
