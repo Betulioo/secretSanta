@@ -59,12 +59,30 @@ const LoginForm: React.FC = () => {
       if (token) {
         localStorage.setItem("authToken", token);
         console.log("Inicio de sesión exitoso. Token guardado en localStorage:", token);
+        try {
+          const response = await fetch("/api/profile",{
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          if (!response.ok) {
+            throw new Error("Error al obtener los datos del usuario");
+          }
+          const data = await response.json();
+          localStorage.setItem("profile", JSON.stringify(data));
+      } catch (error) {
+        console.error("Error al obtener los datos del usuario:", error);
+        
+      }
       } else {
         throw new Error("No se recibió un token en la respuesta.");
       }
   
       setIsSubmitted(true);
       setIsSuccess(true);
+
+     
       router.push("/home")
     } catch (error: any) {
       setApiError(error.message || "Error en el inicio de sesión");

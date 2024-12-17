@@ -5,12 +5,12 @@ import React from "react";
 
 
 const House: React.FC = () => {
-  const handleClick = () => {
-    localStorage.removeItem("authToken");
-    // sessionStorage.removeItem("authToken");
-  };
+//   const handleClick = () => {
+//     localStorage.removeItem("authToken");
+//     // sessionStorage.removeItem("authToken");
+//   };
   return (
-    <div className="bg-[#7C956F]">
+    <div className="bg-[#7C956F] h-screen">
       <MenuPrincipal />
       <GroupList />
     </div>

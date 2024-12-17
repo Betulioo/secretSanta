@@ -11,6 +11,7 @@
   "dependencies": {
     "@nextui-org/spinner": "^2.2.4",
     "axios": "^1.7.7",
+    "jsonwebtoken": "^9.0.2",
     "next": "15.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -20,6 +21,7 @@
   "devDependencies": {
     "@eslint/js": "^9.14.0",
     "@types/eslint": "^9.6.1",
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

@@ -1,10 +1,41 @@
+"use client"
 import React from "react";
+import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Spinner } from "@nextui-org/spinner";
 
 const SecretSanta: React.FC = () => {
+  const [isLoading, setIsLoading] = React.useState(true);
+
+
+   useEffect(() => {
+    const protectedRoute = async () => {
+      const auth = await fetch("/api/protected", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      });
+  
+      const isauth = await auth.json();
+      console.log(isauth);
+      
+      if (isauth.message === "Authorized") {
+        setIsLoading(false);
+        window.location.href = "/home"; // Redirección manual
+      }
+      if (isauth.message === "Unauthorized" || isauth.error) {
+        setIsLoading(false);
+      }
+    };
+  
+    protectedRoute();
+  }, []);
   return (
     <section className="relative bg-[#7C956F] w-full h-screen">
+    {isLoading && (<Spinner color="danger" label="Danger" labelColor="danger" />)}
+
       {/* red line*/}
       <div className="absolute bg-[#D22C31] w-full h-[10vh]"></div>
 
