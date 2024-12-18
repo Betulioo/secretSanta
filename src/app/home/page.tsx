@@ -1,14 +1,13 @@
 'use client'
 import MenuPrincipal from "@/components/Layout/MenuPrincipal";
 import GroupList from "@/components/SecretSanta/grouplist";
+import GroupCreationForm from "@/components/ui/GroupCreationForm";
 import React from "react";
+import { useState } from "react";
 
 
 const House: React.FC = () => {
-  const handleClick = () => {
-    localStorage.removeItem("authToken");
-    // sessionStorage.removeItem("authToken");
-  };
+
   return (
     <div className="bg-[#7C956F]">
       <MenuPrincipal />
@@ -18,3 +17,4 @@ const House: React.FC = () => {
 };
 
 export default House;
+ 

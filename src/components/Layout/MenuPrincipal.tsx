@@ -31,7 +31,7 @@ const MenuPrincipal: React.FC = () => {
   const menuItems: MenuItem[] = [
     { name: "Profile", href: "/profile", subItems: [] },
     { name: "Wish List", href: "/wishlist", subItems: [] },
-    { name: "Groups", href: "/groups", subItems: [] },
+    { name: "Create Groups", href: "/create-groups", subItems: [] },
   ];
   const handleClick = () => {
     localStorage.removeItem("authToken");
@@ -60,7 +60,7 @@ const MenuPrincipal: React.FC = () => {
       {/* Menú principal */}
       <div className="fixed top-0 backdrop-blur-md bg-[#D22C31] flex items-center justify-between lg:justify-center w-full h-[66px] px-4 md:px-8 lg:px-16 z-50 gap-x-5">
         {/* Logotipo */}
-        <Link href="/">
+        <Link href="/home">
           <img
             className="flex-shrink-0 w-[50px] h-auto mr-4 rounded-full border-2"
             src="/images/logotipo0.png"
