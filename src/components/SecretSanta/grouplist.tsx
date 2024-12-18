@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Image from 'next/image';
 
+
 interface Group {
   _id: string;
   name: string;
