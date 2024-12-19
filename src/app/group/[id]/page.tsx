@@ -12,6 +12,7 @@ const Group: React.FC = () => {
   const [isOwner, setIsOwner] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isFull, setIsFull] = useState(false);
+  const [inGroup, setInGroup] = useState(false);
   const getGroup = async (id: string) => {
     const response = await fetch(`/api/group/${id}`, {
       headers: {
@@ -55,18 +56,13 @@ const Group: React.FC = () => {
       window.location.href = "/login"; // Redirección manual
     }
 
-    const userId = localStorage.getItem("id");
-    const groupOwner = groupData?.owner;
-    if (userId && groupOwner && userId === groupOwner) {
-      setIsOwner(true);
-  };
-
 }
 protectedRoute();
 
 }, []);
 
   useEffect(() => {
+
     const fetchData = async () => {
       const groupData = await getGroup(id);
       setGroupData(groupData[0]);
@@ -76,27 +72,56 @@ protectedRoute();
       setUsernames(usernames);
       setIsLoading(false);
       setIsFull(groupData[0].usersList?.length === groupData[0].quantity);
+
+    const userId = localStorage.getItem("profile") ? JSON.parse(localStorage.getItem("profile") || "{}")._id : null;
+    const groupOwner = groupData[0].owner
+
+      console.log(userId, groupOwner);
+          if (userId && groupOwner && userId === groupOwner) {
+      setIsOwner(true);
+  };
     };
     fetchData();
-  }, [id]);
+  }, [id, inGroup]);
 
   const getGroupStatus = (group: IGroup): string => {
     return `${group.usersList?.length ?? 0}/${group.quantity}`;
   };
 
-  const handleJoinGroup = async (name:string) => { 
-    const baseUrl = process.env.URL_BD;
-    const nametrim = name.trim();
-    const response = await fetch(`${baseUrl}/groups/inGroup/${nametrim}`, {
-      method: "POST",
+  const handleJoinGroup = async (name: string) => { 
+    setIsLoading(true);
+    const nametrim = name.trim().replace(/\s+/g, "%20");
+    console.log(nametrim);
+    
+    const response = await fetch(`/api/inGroup/${nametrim}`, {
+      method: "GET",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       },
     });
     const data = await response.json();
+    setInGroup(data.inGroup);
     console.log(data);
 
   };
+
+  const handleSortGroup = async (name: string) => {
+        setIsLoading(true);
+    const nametrim = name.trim().replace(/\s+/g, "%20");
+    console.log(nametrim);
+    
+    const response = await fetch(`/api/sort/${nametrim}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    });
+    const data = await response.json();
+    await fetch('/api/profile', { method: 'GET', headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` } });
+    setInGroup(data.inGroup);
+
+    console.log(data);
+   }
   return (
     <>
     <MenuPrincipal></MenuPrincipal>
@@ -151,7 +176,7 @@ protectedRoute();
       {isOwner && (
         <div className="mt-4">
           <button
-            onClick={() => alert("Sorteando Secret Santa...")}
+            onClick={() => groupData && handleSortGroup(groupData.name)}
             className="px-4 py-2 rounded bg-red-500 text-white"
           >
             Sortear Secret Santa
