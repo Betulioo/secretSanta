@@ -44,7 +44,7 @@ const Profile: React.FC = () => {
                   />
                   <div className={`absolute inset-0 flex flex-col  items-center justify-center bg-[#FFECB4] text-black transition-opacity duration-500 ${isFlipped ? 'opacity-100' : 'opacity-0'}`}>
                     <h2 className="text-black text-md">Tu amigo secreto es </h2>
-                    <span className="text-xl text-red-400">{secretSanta === "" ? secretSanta : "No tienes amigo secreto"}</span>
+                    <span className="text-xl text-red-400">{secretSanta !== "" ? secretSanta : "No tienes amigo secreto"}</span>
                     
                   </div>
                   </div>
