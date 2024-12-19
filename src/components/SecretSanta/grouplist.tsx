@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from 'next/image';
+import Link from "next/link";
 
 interface Group {
   _id: string;
@@ -67,34 +68,32 @@ const GroupList: React.FC = () => {
     <div className="flex flex-col relative bg-[#7C956F] w-full h-full font-navidad items-center mt-10">
           
 
-      <div className="flex flex-col gap-4 relative w-[95%] rounded-xl  min-h-[10vh]  z-10 py-14 drop-shadow-2xl">
-        {groups.map((group,index) => (
-          <div key={index} className="bg-stamped border-4 border-[#D22C31] rounded-xl">
-
-            <div className="p-2  grid grid-cols-2 gap-2 bg-[#EDE5E5B0] rounded-xl">
-            <div className="flex flex-col items-center text-black text-xl">
-              <h2 className="font-bold">{group.name }</h2>
-              <Image src="/image_2-removebg-preview.png" alt="" width={50} height={30} className="" />
-            </div>
-            
-            <div className="flex flex-col gap-2  text-center text-black font-bold">
-              <p>Participantes: {getGroupStatus(group)}</p>
+      <div className="flex flex-col gap-4 relative w-[95%] rounded-xl  min-h-[10vh]  z-40 py-14 drop-shadow-2xl">
+        {groups.map((group, index) => (
+          <Link key={index} href={`/group/${group.name}`}>
+            <div className="bg-stamped border-4 border-[#D22C31] rounded-xl cursor-pointer">
+              <div className="p-2 grid grid-cols-2 gap-2 bg-[#EDE5E5B0] rounded-xl">
+          <div className="flex flex-col items-center text-black text-xl">
+            <h2 className="font-bold">{group.name}</h2>
+            <Image src="/image_2-removebg-preview.png" alt="" width={50} height={30} className="" />
+          </div>
+          <div className="flex flex-col gap-2 text-center text-black font-bold">
+            <p>Participantes: {getGroupStatus(group)}</p>
             <p className="text-3xl">
-              
               {group.isPrivate ? (
-                <span role="img" aria-label="locked" >
-                  🔒
+                <span role="img" aria-label="locked">
+            🔒
                 </span>
               ) : (
-                <span role="img" aria-label="unlocked" >
-                  🔓
+                <span role="img" aria-label="unlocked">
+            🔓
                 </span>
               )}
             </p>
-
+          </div>
+              </div>
             </div>
-          </div>
-          </div>
+          </Link>
         ))}
               
     </div>

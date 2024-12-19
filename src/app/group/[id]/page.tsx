@@ -83,6 +83,20 @@ protectedRoute();
   const getGroupStatus = (group: IGroup): string => {
     return `${group.usersList?.length ?? 0}/${group.quantity}`;
   };
+
+  const handleJoinGroup = async (name:string) => { 
+    const baseUrl = process.env.URL_BD;
+    const nametrim = name.trim();
+    const response = await fetch(`${baseUrl}/groups/inGroup/${nametrim}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    });
+    const data = await response.json();
+    console.log(data);
+
+  };
   return (
     <>
     <MenuPrincipal></MenuPrincipal>
@@ -114,7 +128,7 @@ protectedRoute();
           ))}
           {groupData && Array.from({ length: groupData.quantity - usernames.length }).map((_, index) => (
         <li key={`empty-${index}`} className="text-black flex items-center">
-          ❓ Empty Slot
+          ❓ _ _ _ _ 
         </li>
           ))}
         </ul>
@@ -122,7 +136,7 @@ protectedRoute();
 
       <div className="mt-4">
         <button
-          onClick={() => alert("Ingresando al grupo...")}
+          onClick={() => groupData && handleJoinGroup(groupData.name)}
           disabled={isFull}
           className={`px-4 py-2 rounded ${
             groupData && usernames.length < groupData.quantity
