@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Spinner } from "@nextui-org/spinner";
+import { Loader } from "@/components/spinners/Loader";
 
 const SecretSanta: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(true);
@@ -32,12 +33,28 @@ const SecretSanta: React.FC = () => {
   
     protectedRoute();
   }, []);
-  return (
-    <section className="relative bg-[#7C956F] w-full h-screen">
-    {isLoading && (<Spinner color="danger" label="Danger" labelColor="danger" />)}
 
-      {/* red line*/}
-      <div className="absolute bg-[#D22C31] w-full h-[10vh]"></div>
+  const Layout:React.FC<{ children?: React.ReactNode }> =({children})=>{
+    return (
+          <section className="relative  w-full h-screen background-christ">
+            {children}
+          </section>
+    )
+  }
+
+  if(isLoading){
+    return (
+      <Layout>
+        <div className="w-full h-full m-auto flex justify-center">
+      <Loader loading={isLoading}/>
+      </div>
+      </Layout>
+    )
+  }
+
+  return (
+    <Layout >
+
 
       {/* snow svg line*/}
       <div className="absolute w-full h-screen overflow-hidden bg-transparent z-10">
@@ -68,7 +85,7 @@ const SecretSanta: React.FC = () => {
       </div>
 
       {/*title */}
-      <div className="relative pt-6 z-10">
+      <div className="relative pt-6 z-10 main-title">
         <div className="relative z-10 rounded-full w-[150px] h-[150px] mx-auto">
           <Image
             src="/images/home/santa.png"
@@ -85,11 +102,8 @@ const SecretSanta: React.FC = () => {
         </h1>
       </div>
 
-      {/* mountain img*/}
-      <div className="absolute bottom-[25%] bg-home-mountain w-full h-[40vh]"></div>
-
       {/* buttons*/}
-      <div className="absolute bottom-[33%] w-full  z-10 font-navidad">
+      <div className="absolute bottom-[23%] w-full  z-10 font-navidad">
         <div className="flex flex-col gap-4 justify-center">
           <button className="bg-[#687E57] text-white px-4 py-2 rounded-lg w-1/2 mx-auto">
             <Link href={"/login"}>Iniciar sesión</Link>
@@ -99,87 +113,7 @@ const SecretSanta: React.FC = () => {
           </button>
         </div>
       </div>
-
-      {/* white line*/}
-      <div className="absolute bottom-0 bg-[#E9E9E9FF] w-full h-[40vh]"></div>
-
-      {/* star img*/}
-      <div className="absolute bottom-[55%] w-full h-[15vh] flex justify-center">
-        <Image
-          width={130}
-          height={80}
-          style={{ objectFit: "cover" }}
-          alt="Star image"
-          src="/images/home/star.png"
-          className=""
-        />
-      </div>
-
-      {/* threes img*/}
-      <div className="absolute bottom-[10%] w-full h-[20vh] flex justify-center ">
-        <Image
-          width={150}
-          height={100}
-          style={{ objectFit: "cover" }}
-          alt="Threes image"
-          src="/images/home/tree.png"
-          className=""
-        />
-        <Image
-          width={150}
-          height={100}
-          style={{ objectFit: "cover" }}
-          alt="Threes image"
-          src="/images/home/tree2.png"
-          className=""
-        />
-        <Image
-          width={150}
-          height={100}
-          style={{ objectFit: "cover" }}
-          alt="Threes image"
-          src="/images/home/tree2.png"
-          className=""
-        />
-      </div>
-
-      {/* snow svg line*/}
-      <div className="absolute bottom-[38%] left-0 w-full rotate-180">
-        <svg viewBox="0 0 1440 320" className="w-full h-24">
-          <path
-            fill="#E9E9E9FF"
-            d="M0,256L48,234.7C96,213,192,171,288,176C384,181,480,235,576,256C672,277,768,267,864,250.7C960,235,1056,213,1152,208C1248,203,1344,213,1392,218.7L1440,224L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
-          ></path>
-        </svg>
-      </div>
-      {/* gift img*/}
-      <div className="absolute bottom-0 w-full h-[15vh] flex justify-center">
-        <Image
-          width={150}
-          height={100}
-          style={{ objectFit: "cover" }}
-          alt="Gift image"
-          src="/images/home/gift.png"
-          className=""
-        />
-        <Image
-          width={150}
-          height={100}
-          style={{ objectFit: "cover" }}
-          alt="Gift image"
-          src="/images/home/gift2.png"
-          className=""
-        />{" "}
-        <Image
-          width={150}
-          height={100}
-          style={{ objectFit: "cover" }}
-          alt="Gift image"
-          src="/images/home/gift3.png"
-          className=""
-        />
-      </div>
-    </section>
+    </Layout>
   );
 };
 

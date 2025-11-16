@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Image from 'next/image';
 import Link from "next/link";
+import { Loader } from "../spinners/Loader";
 
 
 interface Group {
@@ -13,9 +14,8 @@ interface Group {
   quantity: number;
 }
 const GroupList: React.FC = () => {
-
   const [groups, setGroups] = useState<Group[]>([]);
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   //useEffect para proteger la ruta
  useEffect(() => {
   const protectedRoute = async () => {
@@ -41,7 +41,7 @@ const GroupList: React.FC = () => {
   // useEffect para obtener los grupos
   useEffect(() => {
   const token = localStorage.getItem("authToken");  
-
+  setIsLoading(true)
 
     const fetchData = async () => {
       const response = await fetch("/api/groups", {
@@ -53,22 +53,34 @@ const GroupList: React.FC = () => {
       const data = await response.json();
       setGroups(data);
 
-      // setUserlist(data);
+     setIsLoading(false);
     };
     fetchData();
   }, []);
 
 
- 
-
-
   const getGroupStatus = (group: Group): string => {
     return `${group.usersList.length}/${group.quantity}`;
   };
-  return (
-    <div className="flex flex-col relative bg-[#7C956F] w-full h-full font-navidad items-center mt-10">
-          
 
+    const Layout: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+  
+      return (
+        <div className="flex flex-col relative bg-[#7C956F] w-full h-full font-navidad items-center mt-10">
+          {children}
+        </div>
+      )
+    }
+
+  if(isLoading){
+    return (
+    <Layout>
+    <Loader loading={isLoading}/>
+    </Layout>)
+  }
+  return (
+    <Layout>
+          
       <div className="flex flex-col gap-4 relative w-[95%] rounded-xl  min-h-[10vh]  z-40 py-14 drop-shadow-2xl">
         {groups.map((group, index) => (
           <Link key={index} href={`/group/${group.name}`}>
@@ -126,7 +138,7 @@ const GroupList: React.FC = () => {
           style={{ left: "90%", animationDelay: "1s" }}
         ></div>
       </div>
-    </div>
+    </Layout>
   );
 };
 
