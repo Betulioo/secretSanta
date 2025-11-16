@@ -6,6 +6,15 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Avisos } from "./components_/Avisos";
 
+
+  const Layout: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+    return (
+      <div className="flex justify-center items-center min-h-screen font-navidad">
+        {children}
+      </div>
+    )
+  };
+
 const LoginForm: React.FC = () => {
   const [formData, setFormData] = useState({
     username: "",
@@ -87,13 +96,7 @@ const LoginForm: React.FC = () => {
     }
   };
 
-  const Layout: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
-    return (
-      <div className="flex justify-center items-center min-h-screen font-navidad">
-        {children}
-      </div>
-    )
-  }
+
 
   return (
     <Layout >
@@ -101,7 +104,7 @@ const LoginForm: React.FC = () => {
         <img src="/image_3-removebg-preview.png" alt="" className="w-[65px] h-16 self-end mb-2" />
         <form onSubmit={handleSubmit} className="grid place-items-center">
           <Input
-            type="username"
+            type="text"
             name="username"
             placeholder="Nombre de Usuario"
             value={formData.username}
@@ -115,7 +118,8 @@ const LoginForm: React.FC = () => {
             onChange={handleChange}
           />
           {/* meter aqui el erro de contraseña */}
-          <Avisos mensajeError={apiError}/>
+          {apiError !== '' && (<Avisos mensajeError={apiError}/>)}
+          
           <button disabled={isLoading} type="submit" className={`${isLoading ? 'bg-gray-600':'bg-red-600'}  text-white  p-2 my-2 font-semibold rounded-full shadow-lg border-4 border-white`}>Iniciar Sesión</button>
 
         </form>

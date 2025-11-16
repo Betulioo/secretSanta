@@ -13,35 +13,45 @@ interface Group {
   owner: string;
   quantity: number;
 }
+
+const Layout: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+
+  return (
+    <div className="flex flex-col relative bg-[#7C956F] w-full h-full font-navidad items-center mt-10">
+      {children}
+    </div>
+  )
+}
+
 const GroupList: React.FC = () => {
   const [groups, setGroups] = useState<Group[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   //useEffect para proteger la ruta
- useEffect(() => {
-  const protectedRoute = async () => {
-    const auth = await fetch("/api/protected", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-      },
-    });
+  useEffect(() => {
+    const protectedRoute = async () => {
+      const auth = await fetch("/api/protected", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      });
 
-    const isauth = await auth.json();
-    console.log(isauth);
+      const isauth = await auth.json();
+      console.log(isauth);
 
-    if (isauth.message === "Unauthorized" || isauth.error) {
-      window.location.href = "/login"; // Redirección manual
-    }
-  };
+      if (isauth.message === "Unauthorized" || isauth.error) {
+        window.location.href = "/login"; // Redirección manual
+      }
+    };
 
-  protectedRoute();
-}, []);
+    protectedRoute();
+  }, []);
 
 
   // useEffect para obtener los grupos
   useEffect(() => {
-  const token = localStorage.getItem("authToken");  
-  setIsLoading(true)
+    const token = localStorage.getItem("authToken");
+    setIsLoading(true)
 
     const fetchData = async () => {
       const response = await fetch("/api/groups", {
@@ -53,7 +63,7 @@ const GroupList: React.FC = () => {
       const data = await response.json();
       setGroups(data);
 
-     setIsLoading(false);
+      setIsLoading(false);
     };
     fetchData();
   }, []);
@@ -63,53 +73,46 @@ const GroupList: React.FC = () => {
     return `${group.usersList.length}/${group.quantity}`;
   };
 
-    const Layout: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
-  
-      return (
-        <div className="flex flex-col relative bg-[#7C956F] w-full h-full font-navidad items-center mt-10">
-          {children}
-        </div>
-      )
-    }
 
-  if(isLoading){
+
+  if (isLoading) {
     return (
-    <Layout>
-    <Loader loading={isLoading}/>
-    </Layout>)
+      <Layout>
+        <Loader loading={isLoading} />
+      </Layout>)
   }
   return (
     <Layout>
-          
+
       <div className="flex flex-col gap-4 relative w-[95%] rounded-xl  min-h-[10vh]  z-40 py-14 drop-shadow-2xl">
         {groups.map((group, index) => (
           <Link key={index} href={`/group/${group.name}`}>
             <div className="bg-stamped border-4 border-[#D22C31] rounded-xl cursor-pointer">
               <div className="p-2 grid grid-cols-2 gap-2 bg-[#EDE5E5B0] rounded-xl">
-          <div className="flex flex-col items-center text-black text-xl">
-            <h2 className="font-bold">{group.name}</h2>
-            <Image src="/image_2-removebg-preview.png" alt="" width={50} height={30} className="" />
-          </div>
-          <div className="flex flex-col gap-2 text-center text-black font-bold">
-            <p>Participantes: {getGroupStatus(group)}</p>
-            <p className="text-3xl">
-              {group.isPrivate ? (
-                <span role="img" aria-label="locked">
-            🔒
-                </span>
-              ) : (
-                <span role="img" aria-label="unlocked">
-            🔓
-                </span>
-              )}
-            </p>
-          </div>
+                <div className="flex flex-col items-center text-black text-xl">
+                  <h2 className="font-bold">{group.name}</h2>
+                  <Image src="/image_2-removebg-preview.png" alt="" width={50} height={30} className="" />
+                </div>
+                <div className="flex flex-col gap-2 text-center text-black font-bold">
+                  <p>Participantes: {getGroupStatus(group)}</p>
+                  <p className="text-3xl">
+                    {group.isPrivate ? (
+                      <span role="img" aria-label="locked">
+                        🔒
+                      </span>
+                    ) : (
+                      <span role="img" aria-label="unlocked">
+                        🔓
+                      </span>
+                    )}
+                  </p>
+                </div>
               </div>
             </div>
           </Link>
         ))}
-              
-    </div>
+
+      </div>
 
       {/* snow svg line*/}
       <div className="absolute w-full h-screen overflow-hidden bg-transparent z-10">

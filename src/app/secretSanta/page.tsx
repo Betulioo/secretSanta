@@ -3,8 +3,16 @@ import React from "react";
 import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Spinner } from "@nextui-org/spinner";
 import { Loader } from "@/components/spinners/Loader";
+
+
+  const Layout:React.FC<{ children?: React.ReactNode }> =({children})=>{
+    return (
+          <section className="relative  w-full h-screen background-christ">
+            {children}
+          </section>
+    )
+  }
 
 const SecretSanta: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(true);
@@ -34,13 +42,7 @@ const SecretSanta: React.FC = () => {
     protectedRoute();
   }, []);
 
-  const Layout:React.FC<{ children?: React.ReactNode }> =({children})=>{
-    return (
-          <section className="relative  w-full h-screen background-christ">
-            {children}
-          </section>
-    )
-  }
+
 
   if(isLoading){
     return (
